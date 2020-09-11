@@ -47,12 +47,13 @@ async def echo(message: types.Message):
 
     # await message.answer(message.text)
     ideal = r'\w+'
-    ideal = ideal.replace('*', '%')
-    ideal = ideal.replace('?', '*')
-    if len(re.findall(ideal, message.text)) > 0:
-        if len(find_word(message.text)) > 0:
+    msg = message.text
+    msg = msg.replace('*', '%')
+    msg = msg.replace('?', '*')
+    if len(re.findall(ideal, msg)) > 0:
+        if len(find_word(msg)) > 0:
             try:
-                await message.answer(find_word(message.text))
+                await message.answer(find_word(msg))
             except:
                 await message.answer('Простите, вариантов слишком много, нужно сократить запрос')
         else:
