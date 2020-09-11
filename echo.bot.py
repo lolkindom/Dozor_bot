@@ -20,8 +20,8 @@ async def send_welcome(message: types.Message):
     Я маленький ботик и только учусь
     """
     await message.reply("Приветствую\nЯ часть команды\nНочного Позора 1.0\nПомогу в поиске слов\nНеизвестные буквы "
-                        "закрываем *\nНе знаем количество неизвестных букв - ставим %\nпримеры:\nС**АК* = "
-                        "СобАКа\n%БАК% = соБАКа и другие варианты")
+                        "закрываем ?\nНе знаем количество неизвестных букв - ставим *\nпримеры:\nС??АК? = "
+                        "СобАКа\n*БАК* = соБАКа и другие варианты")
 
 
 @dp.message_handler(regexp='(^cat[s]?$|puss)')
@@ -47,6 +47,8 @@ async def echo(message: types.Message):
 
     # await message.answer(message.text)
     ideal = r'\w+'
+    ideal = ideal.replace('*', '%')
+    ideal = ideal.replace('?', '*')
     if len(re.findall(ideal, message.text)) > 0:
         if len(find_word(message.text)) > 0:
             try:
@@ -57,8 +59,8 @@ async def echo(message: types.Message):
             await message.answer('Простите, я не нашел подходящих вариантов =(')
     else:
         await message.reply('Неверный запрос\n'
-                            'примеры:\nС**АК* = '
-                            'СобАКа\n%БАК% = соБАКа и другие варианты')
+                            'примеры:\nС??АК? = '
+                            'СобАКа\n*БАК* = соБАКа и другие варианты')
 
 
 if __name__ == '__main__':
